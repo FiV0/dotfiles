@@ -1,0 +1,37 @@
+# General stuff
+apt-transport-https
+curl
+dockmanager
+docky
+gconf-editor
+git
+htop
+hwinfo
+libsecret-1-dev
+nvidia-driver-430
+owncloud-client
+rlwarp
+vim
+weechat-curses
+
+# python
+jupyter-core
+jupyter-notebook
+python-dev
+python3-pip
+python3-dev
+
+# with pip3
+pipenv
+
+#gcc stuff
+cmake
+
+#js
+npm
+
+#for cl stuff
+#psychiq
+redis-server
+
+#cloned
