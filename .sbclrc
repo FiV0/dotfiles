@@ -1,0 +1,16 @@
+;;; The following lines added by ql:add-to-init-file:
+#-quicklisp
+(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"
+                                       (user-homedir-pathname))))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+
+(ql:quickload "quickproject")
+
+(defmethod print-object ((object hash-table) stream)
+  (format stream "#HASH{~{~{(~a : ~a)~}~^ ~}}"
+          (loop for key being the hash-keys of object
+                using (hash-value value)
+                collect (list key value))))
+
+(push #P"~/Code/CL/" ql:*local-project-directories*)
