@@ -37,6 +37,11 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; save auto-save and backup files somewhere else
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 (require 'use-package)
 
 ;; global linenumbers
@@ -76,7 +81,7 @@
 ;; company-mode in all buffers
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key "\t" 'company-complete-common)
-(setq company-idle-delay 0) ; start completions immediately 
+(setq company-idle-delay 0) ; start completions immediately
 ;; paredit hooks
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
