@@ -8,7 +8,7 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 
-;; custom thems
+;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 (custom-set-variables
@@ -20,6 +20,11 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(company-backends
+   (quote
+    (company-slime company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
+                   (company-dabbrev-code company-gtags company-etags company-keywords)
+                   company-oddmuse company-dabbrev)))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
@@ -37,13 +42,18 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; slime stuff
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf
+                                   slime-company
+                                   ))
+
 ;; save auto-save and backup files somewhere else
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (require 'use-package)
-
 
 ;; global linenumbers
 (when (version<= "26.0.50" emacs-version)
@@ -149,7 +159,7 @@
 ;; make normal mode the default
 (setq evil-emacs-state-modes nil)
 
-;; new empty without prompting for a name
+;; new empty buffer without prompting for a name
 (defun new-empty-buffer ()
   "Create a new empty buffer.
 New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
@@ -160,14 +170,11 @@ URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
 Version 2017-11-01"
   (interactive)
   (let (($buf (generate-new-buffer "untitled")))
-    (switch-to-buffer $buf)
     (funcall initial-major-mode)
+    (switch-to-buffer $buf)
     (setq buffer-offer-save t)
     $buf))
 
-;; slime stuff
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf slime-company))
 
 
 ;; tabbar stuff
