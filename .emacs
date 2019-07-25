@@ -20,13 +20,13 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (jungle)))
+ '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
+    ("2925ed246fb757da0e8784ecf03b9523bccd8b7996464e587b081037e0e98001" "a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
  '(package-selected-packages
    (quote
-    (evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -44,23 +44,6 @@
       `((".*" ,temporary-file-directory t)))
 (require 'use-package)
 
-;; leader mode
-(global-evil-leader-mode)
-(evil-leader/set-leader ",")
-
-;; nerd-commenter
-(evil-leader/set-key
-  "ci" 'evilnc-comment-or-uncomment-lines
-  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-  "cc" 'evilnc-copy-and-comment-lines
-  "cp" 'evilnc-comment-or-uncomment-paragraphs
-  "cr" 'comment-or-uncomment-region
-  "cv" 'evilnc-toggle-invert-comment-line-by-line
-  "."  'evilnc-copy-and-comment-operator
-  "\\" 'evilnc-comment-operator ; if you prefer backslash key
-  "q" 'cider-popup-buffer-quit-function
-)
 
 ;; global linenumbers
 (when (version<= "26.0.50" emacs-version)
@@ -81,6 +64,24 @@
 ;;allow tabs in evil mode
 (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
 (evil-mode 1)
+
+;; leader mode
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+
+;; nerd-commenter
+(evil-leader/set-key
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc" 'evilnc-copy-and-comment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "."  'evilnc-copy-and-comment-operator
+  "\\" 'evilnc-comment-operator ; if you prefer backslash key
+  "q" 'cider-popup-buffer-quit-function
+)
 
 ;; evil-surround
 (use-package evil-surround
@@ -110,7 +111,7 @@
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
 (add-hook 'cider-repl-mode-hook       #'enable-paredit-mode)
-(add-hook 'slime-repl-mode-hook            #'enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
 ;; evil cleverparens 
 (add-hook 'emacs-lisp-mode-hook       #'evil-cleverparens-mode)
 (add-hook 'eval-expression-minibuffer-setup-hook #'evil-cleverparens-mode)
@@ -122,18 +123,28 @@
 (add-hook 'cider-repl-mode-hook       #'evil-cleverparens-mode)
 (add-hook 'slime-repl-mode-hook       #'evil-cleverparens-mode)
 ;; highlight parentheses
-(require 'highlight-parentheses)
-(defun highlight-parentheses-fun ()
-  (highlight-parentheses-mode t))
-(add-hook 'emacs-lisp-mode-hook #'highlight-parentheses-fun)
-(add-hook 'eval-expression-minibuffer-setup-hook #'highlight-parentheses-fun)
-(add-hook 'ielm-mode-hook             #'highlight-parentheses-fun)
-(add-hook 'lisp-mode-hook             #'highlight-parentheses-fun)
-(add-hook 'lisp-interaction-mode-hook #'highlight-parentheses-fun)
-(add-hook 'scheme-mode-hook           #'highlight-parentheses-fun)
-(add-hook 'clojure-mode-hook          #'highlight-parentheses-fun)
-(add-hook 'cider-repl-mode-hook       #'highlight-parentheses-fun)
-(add-hook 'slime-repl-mode-hook            #'highlight-parentheses-fun)
+;; (require 'highlight-parentheses)
+;; (defun highlight-parentheses-fun ()
+;;   (highlight-parentheses-mode t))
+;; (add-hook 'emacs-lisp-mode-hook       #'highlight-parentheses-fun)
+;; (add-hook 'eval-expression-minibuffer-setup-hook #'highlight-parentheses-fun)
+;; (add-hook 'ielm-mode-hook             #'highlight-parentheses-fun)
+;; (add-hook 'lisp-mode-hook             #'highlight-parentheses-fun)
+;; (add-hook 'lisp-interaction-mode-hook #'highlight-parentheses-fun)
+;; (add-hook 'scheme-mode-hook           #'highlight-parentheses-fun)
+;; (add-hook 'clojure-mode-hook          #'highlight-parentheses-fun)
+;; (add-hook 'cider-repl-mode-hook       #'highlight-parentheses-fun)
+;; (add-hook 'slime-repl-mode-hook       #'highlight-parentheses-fun)
+;; rainbow parentheses
+(add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
+(add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
+(add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode)
+(add-hook 'clojure-mode-hook          #'rainbow-delimiters-mode)
+(add-hook 'cider-repl-mode-hook       #'rainbow-delimiters-mode)
+(add-hook 'slime-repl-mode-hook       #'rainbow-delimiters-mode)
 
 ;; make normal mode the default
 (setq evil-emacs-state-modes nil)
@@ -156,7 +167,7 @@ Version 2017-11-01"
 
 ;; slime stuff
 (setq inferior-lisp-program "/usr/bin/sbcl")
-(setq slime-contribs '(slime-fancy))
+(setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf slime-company))
 
 
 ;; tabbar stuff
