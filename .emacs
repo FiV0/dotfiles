@@ -22,16 +22,16 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(company-backends
    (quote
-    (company-slime company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
-                   (company-dabbrev-code company-gtags company-etags company-keywords)
-                   company-oddmuse company-dabbrev)))
+    (company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
+     (company-dabbrev-code company-gtags company-etags company-keywords)
+     company-oddmuse company-dabbrev)))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
     ("2925ed246fb757da0e8784ecf03b9523bccd8b7996464e587b081037e0e98001" "a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
  '(package-selected-packages
    (quote
-    (slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (company-quickhelp slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -41,12 +41,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; slime stuff
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf
-                                   slime-company
-                                   ))
 
 ;; save auto-save and backup files somewhere else
 (setq backup-directory-alist
@@ -111,6 +105,10 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key "\t" 'company-complete-common)
 (setq company-idle-delay 0) ; start completions immediately
+
+;; company quickhelp
+(company-quickhelp-mode)
+
 ;; paredit hooks
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
@@ -176,6 +174,15 @@ Version 2017-11-01"
     $buf))
 
 
+;; slime stuff
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf slime-company))
+;; avoid slime-company overriding the above grouped backends
+;; the slime-company contrib pushs slime-company as single backend to company-backends
+(defun slime-avoid-override ()
+  (pop company-backends)
+  (push '(company-slime company-dabbrev) company-backends))
+(setq slime-connected-hook 'slime-avoid-override)
 
 ;; tabbar stuff
 (require 'tabbar)
