@@ -11,6 +11,7 @@ libsecret-1-dev
 nvidia-driver-430
 owncloud-client
 rlwarp
+traceroute
 vim
 weechat-curses
 
@@ -33,5 +34,13 @@ npm
 #for cl stuff
 #psychiq
 redis-server
+
+# for jekyll
+ruby-full
+zlib1g-dev
+
+#with gem
+jekyll
+bundler
 
 #cloned
