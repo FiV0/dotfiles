@@ -23,15 +23,15 @@
  '(company-backends
    (quote
     (company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
-     (company-dabbrev-code company-gtags company-etags company-keywords)
-     company-oddmuse company-dabbrev)))
+                  (company-dabbrev-code company-gtags company-etags company-keywords)
+                  company-oddmuse company-dabbrev)))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
     ("2925ed246fb757da0e8784ecf03b9523bccd8b7996464e587b081037e0e98001" "a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
  '(package-selected-packages
    (quote
-    (company-quickhelp slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (markdown-mode company-quickhelp slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -85,7 +85,13 @@
   "."  'evilnc-copy-and-comment-operator
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
   "q" 'cider-popup-buffer-quit-function
-)
+  )
+
+(defun sldb-leader-setup ()
+  (evil-leader/set-key
+    "a" 'sldb-abort))
+
+(add-hook 'sldb-hook 'sldb-leader-setup)
 
 ;; evil-surround
 (use-package evil-surround
@@ -104,8 +110,8 @@
 ;; company-mode in all buffers
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key "\t" 'company-complete-common)
-(setq company-idle-delay 0) ; start completions immediately
-
+                                        ; start completions immediately
+(setq company-idle-delay 0)
 ;; company quickhelp
 (company-quickhelp-mode)
 
@@ -182,7 +188,7 @@ Version 2017-11-01"
 (defun slime-avoid-override ()
   (pop company-backends)
   (push '(company-slime company-dabbrev) company-backends))
-(setq slime-connected-hook 'slime-avoid-override)
+(add-hook 'slime-connected-hook 'slime-avoid-override)
 
 ;; tabbar stuff
 (require 'tabbar)
@@ -225,12 +231,35 @@ Version 2017-11-01"
 (customize-set-variable 'tabbar-use-images nil)
 
 ;; My preferred keys
-(define-key global-map (kbd "M-j") 'kill-this-buffer)
-(define-key global-map (kbd "M-k") 'new-empty-buffer)
-(define-key global-map (kbd "<M-left>") 'tabbar-backward-tab)
-(define-key global-map (kbd "<M-right>") 'tabbar-forward-tab)
-(define-key global-map (kbd "M-h") 'tabbar-backward-group)
-(define-key global-map (kbd "M-l") 'tabbar-forward-group)
+;; (define-key global-map (kbd "M-<down>") 'kill-this-buffer)
+;; (define-key global-map (kbd "M-<up>") 'new-empty-buffer)
+;; (define-key global-map (kbd "<M-left>") 'tabbar-backward-tab)
+;; (define-key global-map (kbd "<M-right>") 'tabbar-forward-tab)
+;; (define-key global-map (kbd "M-h") 'tabbar-backward-group)
+;; (define-key global-map (kbd "M-l") 'tabbar-forward-group)
+
+(defvar my-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "M-<down>") 'kill-this-buffer) ;; this overrides some paredit binding
+    (define-key map (kbd "M-<up>") 'new-empty-buffer)
+    (define-key map (kbd "<M-left>") 'tabbar-backward-tab)
+    (define-key map (kbd "<M-right>") 'tabbar-forward-tab)
+    (define-key map (kbd "M-h") 'tabbar-backward-group)
+    (define-key map (kbd "M-l") 'tabbar-forward-group)
+    map)
+  "my-keys-minor-mode keymap.")
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter " my-keys")
+
+(my-keys-minor-mode 1)
+
+(defun my-minibuffer-setup-hook ()
+  (my-keys-minor-mode 0))
+
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
 ;; Colors
 (set-face-attribute 'tabbar-default nil
