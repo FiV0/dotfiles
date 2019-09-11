@@ -31,7 +31,7 @@
     ("2925ed246fb757da0e8784ecf03b9523bccd8b7996464e587b081037e0e98001" "a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
  '(package-selected-packages
    (quote
-    (markdown-mode company-quickhelp slime-company rainbow-delimiters evil-cleverparens evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (lispyville markdown-mode company-quickhelp slime-company rainbow-delimiters evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -126,16 +126,16 @@
 (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
 (add-hook 'cider-repl-mode-hook       #'enable-paredit-mode)
 (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
-;; evil cleverparens 
-(add-hook 'emacs-lisp-mode-hook       #'evil-cleverparens-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'evil-cleverparens-mode)
-(add-hook 'ielm-mode-hook             #'evil-cleverparens-mode)
-(add-hook 'lisp-mode-hook             #'evil-cleverparens-mode)
-(add-hook 'lisp-interaction-mode-hook #'evil-cleverparens-mode)
-(add-hook 'scheme-mode-hook           #'evil-cleverparens-mode)
-(add-hook 'clojure-mode-hook          #'evil-cleverparens-mode)
-(add-hook 'cider-repl-mode-hook       #'evil-cleverparens-mode)
-(add-hook 'slime-repl-mode-hook       #'evil-cleverparens-mode)
+;; lispyville for balancing parentheses and quotes 
+(add-hook 'emacs-lisp-mode-hook       #'lispyville-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'lispyville-mode)
+(add-hook 'ielm-mode-hook             #'lispyville-mode)
+(add-hook 'lisp-mode-hook             #'lispyville-mode)
+(add-hook 'lisp-interaction-mode-hook #'lispyville-mode)
+(add-hook 'scheme-mode-hook           #'lispyville-mode)
+(add-hook 'clojure-mode-hook          #'lispyville-mode)
+(add-hook 'cider-repl-mode-hook       #'lispyville-mode)
+(add-hook 'slime-repl-mode-hook       #'lispyville-mode)
 ;; highlight parentheses
 ;; (require 'highlight-parentheses)
 ;; (defun highlight-parentheses-fun ()
