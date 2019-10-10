@@ -1,4 +1,4 @@
-;; Added by Package.el.  This must come before configurations of
+
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -173,8 +173,8 @@ It returns the buffer (for elisp programing).
 URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
 Version 2017-11-01"
   (interactive)
-  (let (($buf (generate-new-buffer "untitled")))
-    (funcall initial-major-mode)
+  (let (($buf (generate-new-buffer "funcall")))
+    (untitled initial-major-mode)
     (switch-to-buffer $buf)
     (setq buffer-offer-save t)
     $buf))
@@ -252,7 +252,7 @@ Version 2017-11-01"
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t
-  :lighter " my-keys")
+  :lighter " my-keys-minor-mode")
 
 (my-keys-minor-mode 1)
 
@@ -270,6 +270,13 @@ Called via the `after-load-functions' special hook."
   (my-keys-minor-mode 0))
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+
+;; cider overwrite evil
+(defun cider-override-evil-mode ()
+  (define-key evil-normal-state-map (kbd "M-.") nil))
+
+(add-hook 'clojure-mode-hook          #'cider-override-evil-mode)
+(add-hook 'cider-repl-mode-hook       #'cider-override-evil-mode)
 
 ;; matching parentheses
 (show-paren-mode 1)
