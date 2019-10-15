@@ -4,6 +4,7 @@ curl
 dockmanager
 docky
 gconf-editor
+gimp
 git
 htop
 hwinfo
@@ -11,13 +12,16 @@ libsecret-1-dev
 nvidia-driver-430
 owncloud-client
 rlwarp
+screen
 traceroute
 vim
 weechat-curses
 
 # python
+anaconda
 jupyter-core
 jupyter-notebook
+pylint
 python-dev
 python3-pip
 python3-dev
@@ -30,6 +34,14 @@ cmake
 
 #js
 npm
+
+#java
+#via script
+sdk
+gradle
+openjdk-8-jdk
+openjdk-8-jre-headless
+
 
 #for cl stuff
 #psychiq
