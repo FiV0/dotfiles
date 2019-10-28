@@ -273,7 +273,9 @@ Called via the `after-load-functions' special hook."
 
 ;; cider overwrite evil
 (defun cider-override-evil-mode ()
-  (define-key evil-normal-state-map (kbd "M-.") nil))
+  (define-key evil-normal-state-map (kbd "M-.") nil)
+  ;; (evil-define-key 'visual clojure-mode-map (kbd "C-c C-v r")'cider-eval-region)
+  (setq cider-repl-display-help-banner nil))
 
 (add-hook 'clojure-mode-hook          #'cider-override-evil-mode)
 (add-hook 'cider-repl-mode-hook       #'cider-override-evil-mode)
@@ -283,20 +285,20 @@ Called via the `after-load-functions' special hook."
 
 ;; Colors
 (set-face-attribute 'tabbar-default nil
-        :background "gray20" :foreground
-        "gray60" :distant-foreground "gray50"
-        :family "DejaVu Sans Mono" :box nil)
+                    :background "gray20" :foreground
+                    "gray60" :distant-foreground "gray50"
+                    :family "DejaVu Sans Mono" :box nil)
 (set-face-attribute 'tabbar-unselected nil
-        :background "gray80" :foreground "black" :box nil)
+                    :background "gray80" :foreground "black" :box nil)
 (set-face-attribute 'tabbar-modified nil
-        :foreground "red4" :box nil
-        :inherit 'tabbar-unselected)
+                    :foreground "red4" :box nil
+                    :inherit 'tabbar-unselected)
 (set-face-attribute 'tabbar-selected nil
-        :background "#4090c0" :foreground "white" :box nil)
+                    :background "#4090c0" :foreground "white" :box nil)
 (set-face-attribute 'tabbar-selected-modified nil
-        :inherit 'tabbar-selected :foreground "GoldenRod2" :box nil)
+                    :inherit 'tabbar-selected :foreground "GoldenRod2" :box nil)
 (set-face-attribute 'tabbar-button nil
-        :box nil)
+                    :box nil)
 
 (add-to-list 'load-path "~/.emacs.d/powerline")
 ;; Use Powerline to make tabs look nicer
