@@ -1,4 +1,4 @@
-
+;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -22,16 +22,17 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(company-backends
    (quote
-    (company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
+    (company-slime company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
                   (company-dabbrev-code company-gtags company-etags company-keywords)
                   company-oddmuse company-dabbrev)))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
     ("2925ed246fb757da0e8784ecf03b9523bccd8b7996464e587b081037e0e98001" "a21be90bf7f37922e647eb3c5b8fbaa250b3b0db9daee4dbf510863a4f9006a4" default)))
+ '(elpy-syntax-check-command "flake8")
  '(package-selected-packages
    (quote
-    (lispyville markdown-mode company-quickhelp slime-company rainbow-delimiters evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (elpy lispyville markdown-mode company-quickhelp slime-company rainbow-delimiters evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -109,8 +110,10 @@
 
 ;; company-mode in all buffers
 (add-hook 'after-init-hook 'global-company-mode)
-(global-set-key "\t" 'company-complete-common)
-                                        ; start completions immediately
+(global-set-key "\t" 'company-complete-common-or-cycle)
+(company-tng-configure-default)
+;; (add-to-list 'company-frontends 'company-tng-frontend) 
+;; start completions immediately
 (setq company-idle-delay 0)
 ;; company quickhelp
 (company-quickhelp-mode)
@@ -183,12 +186,17 @@ Version 2017-11-01"
 ;; slime stuff
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (setq slime-contribs '(slime-fancy slime-quicklisp slime-asdf slime-company))
+(slime-setup '(slime-fancy slime-company))
+(setq slime-company-completion 'fuzzy)
 ;; avoid slime-company overriding the above grouped backends
 ;; the slime-company contrib pushs slime-company as single backend to company-backends
-(defun slime-avoid-override ()
-  (pop company-backends)
-  (push '(company-slime company-dabbrev) company-backends))
-(add-hook 'slime-connected-hook 'slime-avoid-override)
+
+;;(defun slime-avoid-override () (pop company-backends) (push '(company-slime company-dabbrev) company-backends))
+;;(add-hook 'slime-connected-hook 'slime-avoid-override)
+
+;; elpy stuff
+(package-initialize)
+(elpy-enable)
 
 ;; tabbar stuff
 (require 'tabbar)
