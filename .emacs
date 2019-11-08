@@ -23,8 +23,8 @@
  '(company-backends
    (quote
     (company-slime company-bbdb company-eclim company-semantic company-clang company-xcode company-cmake company-capf company-files
-                  (company-dabbrev-code company-gtags company-etags company-keywords)
-                  company-oddmuse company-dabbrev)))
+                   (company-dabbrev-code company-gtags company-etags company-keywords)
+                   company-oddmuse company-dabbrev)))
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
@@ -32,7 +32,7 @@
  '(elpy-syntax-check-command "flake8")
  '(package-selected-packages
    (quote
-    (elpy lispyville markdown-mode company-quickhelp slime-company rainbow-delimiters evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
+    (fic-mode elpy lispyville markdown-mode company-quickhelp slime-company rainbow-delimiters evil-nerd-commenter evil-leader use-package highlight-parentheses cider bind-key tabbar paredit company slime evil-surround)))
  '(tabbar-background-color "gray20")
  '(tabbar-separator (quote (0.5)))
  '(tabbar-use-images nil))
@@ -54,6 +54,16 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
+;; fullscreen mode on startup
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+;; Highlighting of FIXME and TODO
+;; (require 'fic-mode)
+;; (setq fic-highlighted-words '("FIXME" "TODO"))
+;; (add-hook 'lisp-mode-hook #'turn-on-fic-mode)
+;; (add-hook 'clojure-mode-hook #'turn-on-fic-mode)
+;; (fic-mode 1)
 
 ;; dired directory sorting
 (setq dired-listing-switches "-alX  --group-directories-first")
@@ -320,5 +330,6 @@ Called via the `after-load-functions' special hook."
         (format " %s  " (car tab))
         my/tabbar-right)))
 (setq tabbar-tab-label-function #'my/tabbar-tab-label-function)
+
 
 (set-cursor-color "#ef330e")
