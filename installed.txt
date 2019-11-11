@@ -19,6 +19,7 @@ weechat-curses
 
 # python
 anaconda
+flake8
 jupyter-core
 jupyter-notebook
 pylint
@@ -54,5 +55,9 @@ zlib1g-dev
 #with gem
 jekyll
 bundler
+
+#database
+postgresql
+postgresql-contrib
 
 #cloned
