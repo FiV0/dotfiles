@@ -121,6 +121,7 @@ alias ocaml='rlwrap --history-filename=$HOME/.${USER}_command_history ocaml'
 alias python='rlwrap --history-filename=$HOME/.${USER}_command_history python'
 alias sbcl='rlwrap --history-filename=$HOME/.${USER}_command_history sbcl'
 alias gdb='rlwrap --history-filename=$HOME/.${USER}_command_history gdb'
+alias clojure='rlwrap --history-filename=$HOME/.clojure_history clojure '
 
 # by FV
 alias rm="mv -t ~/.local/share/Trash/files"
@@ -141,3 +142,14 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH="/home/fv/.bin:$PATH"
+# Install Ruby Gems to ~/.gems
+export GEM_HOME="$HOME/.gems"
+export PATH="$HOME/.gems/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/fv/.sdkman"
+[[ -s "/home/fv/.sdkman/bin/sdkman-init.sh" ]] && source "/home/fv/.sdkman/bin/sdkman-init.sh"
+
+#JAVA_HOME
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64/"
