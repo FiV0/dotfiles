@@ -121,7 +121,9 @@ alias ocaml='rlwrap --history-filename=$HOME/.${USER}_command_history ocaml'
 alias python='rlwrap --history-filename=$HOME/.${USER}_command_history python'
 alias sbcl='rlwrap --history-filename=$HOME/.${USER}_command_history sbcl'
 alias gdb='rlwrap --history-filename=$HOME/.${USER}_command_history gdb'
-alias clojure='rlwrap --history-filename=$HOME/.clojure_history clojure '
+alias bb='rlwrap --history-filename=$HOME/.${USER}_command_history bb'
+
+# alias clojure='rlwrap --history-filename=$HOME/.clojure_history clojure '
 
 # by FV
 alias rm="mv -t ~/.local/share/Trash/files"
@@ -147,9 +149,21 @@ export PATH="/home/fv/.bin:$PATH"
 export GEM_HOME="$HOME/.gems"
 export PATH="$HOME/.gems/bin:$PATH"
 
+#JAVA_HOME
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64/"
+
+#cask
+export PATH="/home/fv/.cask/bin:$PATH"
+
+# profile bin
+export PATH=$PATH:$HOME/.bin
+
+#graalvm
+export PATH=$HOME/.bin/graalvm-ce-java11-20.0.0/bin:$PATH
+
+#unrevl
+export PATH=$HOME/.bin/graalvm-ce-java11-20.0.0/languages/js/bin:$PATH
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/fv/.sdkman"
 [[ -s "/home/fv/.sdkman/bin/sdkman-init.sh" ]] && source "/home/fv/.sdkman/bin/sdkman-init.sh"
-
-#JAVA_HOME
-export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64/"
